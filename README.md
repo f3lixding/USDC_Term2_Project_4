@@ -1,6 +1,29 @@
 # CarND-Controls-PID
 Self-Driving Car Engineer Nanodegree Program
 
+# Project Reflection
+## General Steps to Tuning
+1. Manual Tuning.
+2. Using Twiddle to fine-tune parameters one at a time.
+
+## Tuning Result
+The final paraters are as follows:
+Kp = 0.2
+Ki = 0.003
+Kd = 4.53
+
+## Tuning Breakdown
+* Kp is directly multiplied onto the cte error. The p_error is directly proportional how far the car is away from the center. This is tuned via observing the degree to which the car oscillates. I started from zero, and gradually increase it until the car is oscillating too much, and I dial it back down.
+* Ki represents the "lurking error" that exists within the system. It can be understood as a correction factor to compensate the difference between what the system thinks it is currently outputting versus what it is actually outputting. This term is more relevant under circumstances that involves uncalibrated hardware. Since the actual output of the car matches closely with the input in the simulator, the term is given very little weight.
+* Kd is the weight given to the derivative term. This term gives the PID controller the capacity to factor in the rate of change. If the car is quickly steering away from the center, this term will compensate by increasing the correction in a similar fashion. On the other hand, should the car steer toward the center too quickly and subsequently puts the car in the danger of oversteering, this term will quickly decrease the steering value so the car approaches its target smoothly.
+
+The throttle was also given a new control scheme. It was observed that the car would sometimes steer off the road even though it is steering to the correct direction. I decided to give the car more time to react to similar situation. This is done via making the throttle inversely proportional to the amount of steering executed. This greatly improved the car's chances to make it around aforementioned corners. 
+
+Twiddle was only really used for the last coefficient. I found that twiddle is very sensitive to the duration to which it is given to work. And it is very easy for it to sink into an local minima that is not at all representitive to the track in its entirety. 
+
+
+
+
 ---
 
 ## Dependencies
